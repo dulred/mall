@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.ggb.repository.CarouselMapper">
+
+    <resultMap id="BaseResultMap" type="com.example.ggb.entity.Carousel">
+            <id column="carousel_id" jdbcType="INTEGER" property="carouselId"></id>
+            <result column="carousel_url" jdbcType="VARBINARY" property="carouselUrl"></result>
+            <result column="redirect_url" jdbcType="VARBINARY" property="redirectUrl"></result>
+            <result column="carousel_rank" jdbcType="INTEGER" property="carouselRank"></result>
+            <result column="is_deleted" jdbcType="TINYINT" property="isDeleted"></result>
+            <result column="create_time" jdbcType="TIMESTAMP" property="createTime"></result>
+             <result column="create_user" jdbcType="INTEGER" property="createUser"></result>
+            <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"></result>
+            <result column="update_user" jdbcType="INTEGER" property="updateUser"></result>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        carousel_id,carousel_url,redirect_url,carousel_rank,is_deleted,
+            create_time,create_user,update_time,update_user
+    </sql>
+
+    <select id="findCarouselList" parameterType="Map" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from mall_carousel
+        where is_deleted = 0
+        order by carousel_rank desc
+        <if test="start!=null and limit !=null">
+            limit #{start},#{limit}
+        </if>
+    </select>
+
+
+    <select id="findCarouselsByNum" parameterType="int" resultMap="BaseResultMap">
+        select
+            <include refid="Base_Column_List" />
+            from mall_carousel
+            where is_deleted = 0
+            order by carousel_rank desc
+            limit #{number}
+    </select>
+
+    <insert id="insertSelective"  parameterType="com.example.ggb.entity.Carousel">
+        insert into mall_carousel
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+
+            <if test="carouselId != null">
+                carousel_id,
+            </if>
+            <if test="carouselUrl != null">
+                carousel_url,
+            </if>
+            <if test="redirectUrl != null">
+                redirect_url,
+            </if>
+            <if test="carouselRank != null">
+                carousel_rank,
+            </if>
+            <if test="isDeleted != null">
+                is_deleted,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="createUser != null">
+                create_user,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="updateUser != null">
+                update_user,
+            </if>
+        </trim>
+        <trim prefix="values(" suffix=")" suffixOverrides=",">
+
+            <if test="carouselId != null">
+                #{carouselId,jdbcType=INTEGER},
+            </if>
+            <if test="carouselUrl != null">
+                #{carouselUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="redirectUrl != null">
+                #{redirectUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="carouselRank != null">
+                #{carouselRank,jdbcType=INTEGER},
+            </if>
+            <if test="isDeleted != null">
+                #{isDeleted ,jdbcType=TINYINT},
+            </if>
+            <if test="createTime != null">
+                #{carouselRank,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createUser != null">
+                #{carouselRank,jdbcType=INTEGER},
+            </if>
+            <if test="updateTime != null">
+                #{carouselRank,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateUser != null">
+                #{carouselRank,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+            <include refid="Base_Column_List" />
+        from mall_carousel
+        where  carousel_id = #{carousel_id,jdbcType=INTEGER} and is_deleted=0
+    </select>
+
+    <select id="getTotalCarousels" parameterType="Map" resultType="int">
+        select count(*) from mall_carousel
+        where is_deleted = 0
+    </select>
+
+
+
+    <update id="updateByPrimaryKeySelective"  parameterType="com.example.ggb.entity.Carousel">
+            update mall_carousel
+        <set>
+            <if test="carouselUrl != null">
+                carousel_url = #{carouselUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="redirectUrl != null">
+                redirect_url = #{redirectUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="carouselRank != null">
+                carousel_rank = #{carouselRank,jdbcType=INTEGER},
+            </if>
+            <if test="isDeleted != null">
+                is_deleted = #{isDeleted,jdbcType=TINYINT},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createUser != null">
+                create_user = #{createUser,jdbcType=INTEGER},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateUser != null">
+                update_user = #{updateUser,jdbcType=INTEGER},
+            </if>
+        </set>
+        where  carousel_id = #{carouselId,jdbcType=INTEGER}
+    </update>
+
+
+
+    <update id="deleteBatch">
+        update mall_carousel
+        set is_deleted=1,update_time=now() where carousel_id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+                #{id}
+        </foreach>
+    </update>
+
+
+
+
+
+
+
+
+</mapper>

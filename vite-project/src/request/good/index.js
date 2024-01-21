@@ -1,0 +1,14 @@
+import axios from "@/request/axios";
+
+export function getCategory(){
+    return axios.get("/categories")
+}
+
+export function search(params) {
+    return axios.get('/search', { params });
+  }
+
+  export function getDetail(id) {
+    return axios.get(`/goods/detail/${id}`);
+  }
+  

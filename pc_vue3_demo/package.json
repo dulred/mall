@@ -1,0 +1,29 @@
+{
+  "name": "vue-erp",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "vite --mode development",
+    "build:beta": "vite build --mode beta",
+    "build:release": "vite build --mode release",
+    "serve": "vite preview"
+  },
+  "dependencies": {
+    "@element-plus/icons-vue": "^2.1.0",
+    "axios": "^1.5.1",
+    "element-plus": "^2.3.14",
+    "js-sha256": "^0.10.1",
+    "pinia": "^2.1.6",
+    "vue": "^3.3.4",
+    "vue-router": "^4.2.5",
+    "wangeditor": "4.6.5"
+  },
+  "devDependencies": {
+    "@vant/auto-import-resolver": "^1.0.1",
+    "@vitejs/plugin-vue": "^4.3.4",
+    "less": "^4.2.0",
+    "unplugin-auto-import": "^0.16.6",
+    "unplugin-vue-components": "^0.25.2",
+    "vite": "^4.4.9"
+  }
+}
